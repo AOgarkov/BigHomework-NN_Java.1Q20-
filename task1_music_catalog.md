@@ -2,54 +2,68 @@
 
 ===================
 
-### Введение:
-Вы можете выполнять задание в любом порядке, но прежеде чем приступить, подумайте как модули будут взаимодействовать между собой.  
-Рекомендуется реализовывать приложение в порядке:
- - web -> модели -> сервисы -> репозитории
- - модели -> репозитории -> сервисы -> web  
-
-[Кроме того, мы настоятельно рекомендуем сдавать это задание по частям, итеративно наращивая функциональность. Пожалуйста убедитесь что вы сдаёте на проверку более или менее завершённые модули, которые возможно запустить и протестировать]
-
 ***
-#### __Пример: приложение Каталог музыки__ 
+#### __приложение Каталог музыки__ 
 
 >База данных H2  
 >Spring Boot  
 >lombok  
 >orika mapper  
+>свои варианты
 
-REST endpoints
+REST endpoints  
 
-api/songs: 
-- `GET /songs` 
-- `GET /songs/{songId}` 
-- `POST /songs`
-- `PUT /songs/{songId}`
-- `DELETE /songs/{songId}`
+authors:
+- `GET /authors`  
+> - возращает всех авторов, pageable response
+- `GET /authors/{authorId}`  
+> - возвращает автора по id
+- `POST /authors`  
+> - добавляет автора
+- `PUT /authors/{authorId}`  
+> - обновляет информацию об авторе
+- `DELETE /authors/{authorId}`  
+> - удаляет автора по id
 
- api/albums:
-- `GET /albums`
-- `GET /albums/{albumId}`
-- `POST /album`
-- `PUT /album/{albumId}`
-- `DELETE /album/{albumId}`
 
- api/author:
-- `GET /authors`
-- `GET /authors/{authorId}`
-- `POST /authors`
-- `PUT /authors/{authorId}`
-- `DELETE /authors/{authorId}`
+albums:
+- `GET /albums`  
+> - возвращает все альбомы, pageable response
+- `GET /albums/{albumId}`  
+> - возвращает альбом по id
+- `POST /albums`  
+> - добавляет альбом
+- `PUT /albums/{albumId}`
+> - обновляет информацию об альбоме
+- `DELETE /albums/{albumId}`
+> - удаляет альбом и все песни которые к нему относятся
+
+
+songs: 
+- `GET /albums/songs` 
+> - возвращает все песни
+- `GET /albums/{albumId}/songs/{songId}` 
+> - возвращает песню по id
+- `POST /albums/{albumId}/songs`  
+> - добавляет песню в альбом
+- `PUT /albums/{albumId}/songs/{songId}`
+> - обновляет информацию о песне
+- `DELETE /albums/{albumId}/songs/{songId}`
+> - удаляет песню
+
+Опционально:  
+- Добавить поиск песен по названию (по части названия)
+- Добавить поиск альбома по году выхода
 
 
 Приложение должно иметь три доменные сущности:  
 `Song {Long id, String name, Duration duration, List<Author> authors, Album album}`  
-`Album {Long id, String name, Duration duration, List<Author> authors, List<Song> songs, Instant createdDate}`  
-`Author {Long id, String firstname, String lastname, Instant birthdate, List<Song> songs, List<Album> albums}`
+`Album {Long id, String name, Duration duration, List<Author> authors, List<Song> songs, LocalDate createdDate}`  
+`Author {Long id, String firstname, String lastname, LocalDate birthdate, List<Album> albums}`
 
 Приложение должно иметь следующую структуру:  
 - Слой Repository - взаимодействие с базой данных
-  > - Поробовать разные инструменты (JdbcTemplate, NativeQuery, JPQL, Jpa repository)
+  > - Поробовать разные инструменты (NativeQuery, JPQL, Jpa repository)
   > - Обратить внимание на CriteriaApi и Specification
 - Слой Service - слой бизнес логики  
 - Слой Web - слой rest контроллеров
@@ -76,19 +90,3 @@ app:
 
 Опционально: Создать Dockerfile
 ***
-
-### Repository: 
-Необходимо реализовать классы DAO, которые будет обеспечивать работу c БД. DAO должен работать через Entity объекты предметной области.
-Entity должны описывать варианты взаимодействия: One-To-One, One-To-Many.  
-Реализовать CRUD операции. На каждую сущность своя таблица. Например, вы выбрали "Медиатека", значит нужно создать три таблицы "песни", "альбомы" и "авторы".
-* DAO использует NamedQuery, NativeQuery. (По желанию)
-* Entity должны описывать варианты взаимодействия: Many-To-Many. (По желанию)
-
-### Markup languages: 
-База данных заполняется при старте приложения из JSON файла
-
-## Evaluation and Feedback Process
-
-Запрос проверки осуществляется через отправку ссылки на git репозиторий с выполненной задачей.
-* https://forms.office.com/Pages/ResponsePage.aspx?id=0HIbtJ9OJkyKaflJ82fJHaeWqIB3x9VNuKBJnf-qcwdURDVJSlFGU0VGMDJJUlBFUjM0NDRDVVlHNy4u
-* Других домашних заданий больше не планируем в тренинге, поэтому dead line середина мая (или завершение тренинга)
