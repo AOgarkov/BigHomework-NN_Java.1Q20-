@@ -88,8 +88,8 @@
 
 Приложение должно иметь три доменные сущности:  
 `Song {Long id, String name, Duration duration, List<Author> authors, Album album}`  
-`Album {Long id, String name, Duration duration, List<Author> authors, List<Song> songs, LocalDate createdDate}`  
-`Author {Long id, String firstname, String lastname, LocalDate birthdate, List<Album> albums}`  
+`Album {Long id, String name, Duration duration, List<Song> songs, LocalDate createdDate}`  
+`Author {Long id, String firstname, String lastname, LocalDate birthdate, List<Song> albums}`  
 
 ## Structure
 

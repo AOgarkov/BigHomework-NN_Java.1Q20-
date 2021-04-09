@@ -88,7 +88,7 @@
 
 - `Ticket {Long id, Plane plane, User user, BigDecimal price, boolean isDeleted}`  
 
-- `Plane {Long id, String name, Integer places, LocalDate depart, Duration duration, String from, String to, boolean isDeleted}`  
+- `Plane {Long id, String name, Integer places, LocalDate depart, Duration duration, String from, String to, List<Ticket> tickets, boolean isDeleted}`  
 
 - `User {Long id, String firstname, String lastname, String passport, List<Tickets> tickets, boolean isDeleted}`  
 
